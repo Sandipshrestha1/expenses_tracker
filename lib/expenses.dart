@@ -12,14 +12,10 @@ class _ExpensesState extends State<Expenses> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        //  mainAxisSize: MainAxisSize.min,
 
-        children: [
-
-Text(" The Chart"),
-Text("Expenses list....")
-
-
-        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Text(" The Chart"), Text("Expenses list....")],
       ),
     );
   }
