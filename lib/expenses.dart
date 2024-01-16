@@ -13,7 +13,13 @@ class _ExpensesState extends State<Expenses> {
     return Scaffold(
       body: Column(
 
-        children: [],
+        children: [
+
+Text(" The Chart"),
+Text("Expenses list....")
+
+
+        ],
       ),
     );
   }
