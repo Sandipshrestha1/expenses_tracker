@@ -13,7 +13,10 @@ class _ExpensesState extends State<Expenses> {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text(" The Chart"), Text("Expenses list....")],
+        children: [
+          Text(" The Chart"), 
+          Text("Expenses list....")
+          ],
       ),
     );
   }
