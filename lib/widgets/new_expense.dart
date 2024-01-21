@@ -1,8 +1,9 @@
-import 'package:expense_tracker/models/expense.dart';
+import 'package:expense_tracker/models/expense.dart'; // Assuming you have ExpenseCategory defined in this file
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({Key? key}) : super(key: key);
 
   @override
   State<NewExpense> createState() {
@@ -11,14 +12,11 @@ class NewExpense extends StatefulWidget {
 }
 
 class _NewExpenseState extends State<NewExpense> {
-  // var _enteredTitle = '';
-  // void _saveTitleInput(String inputvalue) {
-  //   _enteredTitle = inputvalue;
-  // }
-
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
+  ExpenseCategory _selectedCategory = ExpenseCategory.leisure;
+
   void _presentDatePicker() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year - 1, now.month, now.day);
@@ -30,9 +28,11 @@ class _NewExpenseState extends State<NewExpense> {
       lastDate: now,
     );
 
-    setState(() {
-      _selectedDate = pickedDate;
-    });
+    if (pickedDate != null) {
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    }
   }
 
   @override
@@ -49,12 +49,10 @@ class _NewExpenseState extends State<NewExpense> {
       child: Column(
         children: [
           TextField(
-            //  onChanged: _saveTitleInput,
-
             controller: _titleController,
             maxLength: 50,
             keyboardType: TextInputType.text,
-            decoration: InputDecoration(label: Text("Title")),
+            decoration: InputDecoration(labelText: "Title"),
           ),
           Row(
             children: [
@@ -64,7 +62,7 @@ class _NewExpenseState extends State<NewExpense> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     prefixText: "NRS: ",
-                    label: Text("Amount"),
+                    labelText: "Amount",
                   ),
                 ),
               ),
@@ -76,9 +74,11 @@ class _NewExpenseState extends State<NewExpense> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(_selectedDate == null
-                        ? " No date Selected "
-                        : formatter.format(_selectedDate!),),
+                    Text(
+                      _selectedDate == null
+                          ? " No date Selected "
+                          : DateFormat.yMd().format(_selectedDate!),
+                    ),
                     IconButton(
                       onPressed: _presentDatePicker,
                       icon: const Icon(
@@ -92,16 +92,41 @@ class _NewExpenseState extends State<NewExpense> {
           ),
           Row(
             children: [
+              DropdownButton<ExpenseCategory>(
+              value: _selectedCategory,
+              items: ExpenseCategory.values
+                    .map(
+                      (category) => DropdownMenuItem<ExpenseCategory>(
+                        value: category,
+                        child: Text(
+                          category.name.toUpperCase(),
+                        ),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  if (value == null) {
+                    return;
+                  }
+
+                  setState(() {
+                    _selectedCategory = value;
+                  });
+                },
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text("cancel"),
+                child: const Text("Cancel"),
               ),
               ElevatedButton(
                 onPressed: () {
                   print(_titleController.text);
                   print(_amountController.text);
+                  print(_selectedDate);                  print(_selectedCategory);
+                  print(_selectedCategory);
+
                 },
                 child: Text("Save Expense"),
               ),
