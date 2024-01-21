@@ -5,7 +5,9 @@ import 'widgets/expenses.dart';
 void main() {
   runApp(
     MaterialApp(
-      theme: ThemeData(useMaterial3: false),
+      theme: ThemeData(
+        useMaterial3: false,
+      ),
       debugShowCheckedModeBanner: false,
       home: Expenses(),
     ),
