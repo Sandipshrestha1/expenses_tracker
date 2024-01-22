@@ -24,23 +24,44 @@ class _NewExpenseState extends State<NewExpense> {
       firstDate: firstDate,
       lastDate: now,
     );
-      if (pickedDate != null) {
+    if (pickedDate != null) {
       setState(
         () {
-       _selectedDate = pickedDate;
-       },
-        );
-      }
+          _selectedDate = pickedDate;
+        },
+      );
     }
-  void _submitExpenseData() {
-
-if(_titleController.text.trim().isEmpty) {
-
-
-  
-}
-
   }
+
+  void _submitExpenseData() {
+    final enteredAmount = double.tryParse(_amountController.text);
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Invalid Input"),
+          content:
+              const Text("Please enter a valid title, amount and category"),
+          actions: [
+            TextButton(onPressed: () {
+              Navigator.pop(ctx);
+            },
+            
+            child:  const Text("OK"),
+            
+            ),
+          ],
+        ),
+      );
+
+      return;
+    }
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
