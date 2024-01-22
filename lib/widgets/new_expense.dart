@@ -32,7 +32,15 @@ class _NewExpenseState extends State<NewExpense> {
         );
       }
     }
-  void _submitExpenseData() {}
+  void _submitExpenseData() {
+
+if(_titleController.text.trim().isEmpty) {
+
+
+  
+}
+
+  }
   @override
   void dispose() {
     _titleController.dispose();
