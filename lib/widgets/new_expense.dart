@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({Key? key}) : super(key: key);
+//  const NewExpense({Key? key , required this.onAddExpense}) : super(key: key );
+
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
   @override
   State<NewExpense> createState() {
     return _NewExpenseState();
@@ -47,12 +51,11 @@ class _NewExpenseState extends State<NewExpense> {
           content:
               const Text("Please enter a valid title, amount and category"),
           actions: [
-            TextButton(onPressed: () {
-              Navigator.pop(ctx);
-            },
-            
-            child:  const Text("OK"),
-            
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text("OK"),
             ),
           ],
         ),
@@ -60,6 +63,14 @@ class _NewExpenseState extends State<NewExpense> {
 
       return;
     }
+
+    widget.onAddExpense(
+      Expense(
+          title: _titleController.text,
+          amount: enteredAmount,
+          date: _selectedDate!,
+          category: _selectedCategory),
+    );
   }
 
   @override
