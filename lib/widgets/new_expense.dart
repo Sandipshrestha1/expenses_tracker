@@ -74,8 +74,6 @@ class _NewExpenseState extends State<NewExpense> {
     Navigator.pop(context);
   }
 
-
-
   @override
   void dispose() {
     _titleController.dispose();
