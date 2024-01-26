@@ -5,19 +5,26 @@ import 'widgets/expenses.dart';
 final kColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 103, 56, 214),
 );
+
+var kDarkColorScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: const Color.fromARGB(255, 5, 99, 125),
+);
+
 void main() {
   runApp(
     MaterialApp(
-      theme: ThemeData().copyWith(
-        scaffoldBackgroundColor: Color.fromARGB(255, 220, 189, 252),
-        colorScheme: kColorScheme,
-        appBarTheme: AppBarTheme().copyWith(
+          darkTheme: ThemeData.dark().copyWith(colorScheme: kDarkColorScheme,),
+          theme: ThemeData().copyWith(
+          scaffoldBackgroundColor: Color.fromARGB(255, 220, 189, 252),
+          colorScheme: kColorScheme,
+          appBarTheme: AppBarTheme().copyWith(
           backgroundColor: kColorScheme.onPrimaryContainer,
           foregroundColor: kColorScheme.primaryContainer,
           centerTitle: true,
         ),
         cardTheme: CardTheme().copyWith(
-          color: kColorScheme.secondaryContainer,
+          color: kDarkColorScheme.secondaryContainer,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -33,6 +40,7 @@ void main() {
               ),
             ),
       ),
+     // themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       home: Expenses(),
     ),
